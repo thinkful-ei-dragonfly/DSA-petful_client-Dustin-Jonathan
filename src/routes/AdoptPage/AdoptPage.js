@@ -5,10 +5,10 @@ import Dogs from '../../components/Dogs/Dogs'
 
 export default class AdoptPage extends React.Component {
   state = {
-    dogs: [],
-    cats: [],
-    catIndex: 0,
-    dogIndex: 0
+    dogs: null,
+    cats: null,
+    dogNode: null,
+    catNode: null
   }
   componentDidMount(){
     Promise.all([
@@ -27,7 +27,7 @@ export default class AdoptPage extends React.Component {
       ])
     })
     .then(([dogs, cats]) => {
-      this.setState({ dogs, cats })
+      this.setState({ dogs, cats, dogNode: dogs.first, catNode: cats.first })
     })
     .catch(error => {
       console.error({ error })
@@ -35,10 +35,10 @@ export default class AdoptPage extends React.Component {
   }
 
   handleSeeMore = () => {
-    if(this.state.cats[this.state.catIndex+1] && this.state.dogs[this.state.dogIndex + 1]){
+    if(this.state.catNode.next && this.state.dogNode.next){
       this.setState({
-        catIndex: this.state.catIndex +1,
-        dogIndex: this.state.dogIndex +1
+        catNode: catNode.next,
+        dogNode: dogNode.next
       })
     }
   }
@@ -52,8 +52,8 @@ export default class AdoptPage extends React.Component {
             Here are the pets for adoption
           </h1>
         </header>
-        {this.state.cats[this.state.catIndex] && (<Cats i={this.state.catIndex} cats={this.state.cats}/>)}
-        {this.state.dogs[this.state.dogIndex] && (<Dogs i={this.state.dogIndex} dogs={this.state.dogs}/>)}
+        {this.state.catNode && (<Cats cat={this.state.catNode} />)}
+        {this.state.dogNode && (<Dogs dog={this.state.dogNode} />)}
         <button onClick={() => this.handleSeeMore()}>See More pets</button>
       </div>
     )

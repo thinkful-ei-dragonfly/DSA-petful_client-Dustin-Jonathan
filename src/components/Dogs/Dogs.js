@@ -5,22 +5,22 @@ export default class Dogs extends React.Component {
     return (
       <div>
         <h2>Dogs</h2>
-        <img src={this.props.dogs[this.props.i].image} alt="dogs"></img>
+        <img src={this.props.dogNode.image} alt="dogs"></img>
         <ul>
           <li>
-            Name: {this.props.dogs[this.props.i].name}
+            Name: {this.props.dogNode.name}
           </li>
           <li>
-            Gender: {this.props.dogs[this.props.i].gender}
+            Gender: {this.props.dogNode.gender}
           </li>
           <li>
-            Age:{this.props.dogs[this.props.i].age}
+            Age:{this.props.dogNode.age}
           </li>
           <li>
-            Breed: {this.props.dogs[this.props.i].breed}
+            Breed: {this.props.dogNode.breed}
           </li>
           <li>
-            Story: {this.props.dogs[this.props.i].story}
+            Story: {this.props.dogNode.story}
           </li>
         </ul>
         <button type="button">Adopt</button>
