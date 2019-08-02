@@ -37,8 +37,8 @@ export default class AdoptPage extends React.Component {
   handleSeeMore = () => {
     if(this.state.catNode.next && this.state.dogNode.next){
       this.setState({
-        catNode: catNode.next,
-        dogNode: dogNode.next
+        catNode: this.state.catNode.next,
+        dogNode: this.state.dogNode.next
       })
     }
   }
@@ -52,8 +52,8 @@ export default class AdoptPage extends React.Component {
             Here are the pets for adoption
           </h1>
         </header>
-        {this.state.catNode && (<Cats cat={this.state.catNode} />)}
-        {this.state.dogNode && (<Dogs dog={this.state.dogNode} />)}
+        {this.state.catNode !== null && (<Cats cat={this.state.catNode.data} />)}
+        {this.state.dogNode !== null && (<Dogs dog={this.state.dogNode.data} />)}
         <button onClick={() => this.handleSeeMore()}>See More pets</button>
       </div>
     )

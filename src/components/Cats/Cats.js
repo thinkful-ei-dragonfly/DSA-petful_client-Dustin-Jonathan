@@ -5,22 +5,22 @@ export default class Cats extends React.Component {
     return(
       <div>
         <h2>Cats</h2>
-        <img src={this.props.catNode.image} alt="cats"></img>
+        <img src={this.props.cat.image} alt="cats"></img>
         <ul>
           <li>
-            Name: {this.props.catNode.name}
+            Name: {this.props.cat.name}
           </li>
           <li>
-            Gender: {this.props.catNode.gender}
+            Gender: {this.props.cat.gender}
           </li>
           <li>
-            Age:{this.props.catNode.age}
+            Age:{this.props.cat.age}
           </li>
           <li>
-            Breed: {this.props.catNode.breed}
+            Breed: {this.props.cat.breed}
           </li>
           <li>
-            Story: {this.props.catNode.story}
+            Story: {this.props.cat.story}
           </li>
         </ul>
         <button type="button">Adopt</button>
