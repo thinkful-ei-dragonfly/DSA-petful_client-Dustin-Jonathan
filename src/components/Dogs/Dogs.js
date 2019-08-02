@@ -23,7 +23,7 @@ export default class Dogs extends React.Component {
             Story: {this.props.dog.story}
           </li>
         </ul>
-        <button type="button" onClick={()=>this.props.handleDogAdopt()}>Adopt</button>
+        <button type="button" disabled={this.props.count !== 0} onClick={()=>this.props.handleDogAdopt()}>Adopt</button>
       </div>
     )
   }

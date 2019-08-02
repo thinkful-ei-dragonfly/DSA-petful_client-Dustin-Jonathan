@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import { Route } from 'react-router-dom'
 import LandingPage from './routes/LandingPage/LandingPage'
 import AdoptPage from './routes/AdoptPage/AdoptPage'
+import AdoptedPage from './routes/AdoptedPage/AdoptedPage'
 import './App.css';
 
 export default class App extends React.Component {
@@ -21,6 +22,13 @@ export default class App extends React.Component {
       key='/adopt'
       path='/adopt'
       component={AdoptPage}
+      />
+
+      <Route
+      exact
+      key='/adopted'
+      path='/adopted'
+      component={AdoptedPage}
       />
       </>
     )
