@@ -15,6 +15,7 @@ export default class LandingPage extends React.Component {
           You'll get a name of the pet, their gender, age, breed, and their story.
           If you're first in line, you will the option to adopt either pet. 
         </p>
+        <img src={require('../../Images/dog-and-cat.jpg') }></img>
         <button type="button">Start</button>
 
       </div>
