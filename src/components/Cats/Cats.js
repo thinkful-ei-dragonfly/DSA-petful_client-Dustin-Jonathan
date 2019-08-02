@@ -1,6 +1,10 @@
 import React from 'react'
+import ApiService from '../../service/ApiService';
 
 export default class Cats extends React.Component {
+
+  
+
   render() {
     return(
       <div>
@@ -23,7 +27,7 @@ export default class Cats extends React.Component {
             Story: {this.props.cat.story}
           </li>
         </ul>
-        <button type="button">Adopt</button>
+        <button type="button" onClick={()=>this.props.handleCatAdopt()}>Adopt</button>
       </div>
     )
   }
