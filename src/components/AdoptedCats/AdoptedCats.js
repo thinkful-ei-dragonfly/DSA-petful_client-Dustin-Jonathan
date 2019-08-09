@@ -2,9 +2,9 @@ import React from 'react'
 
 export default class AdoptedCats extends React.Component {
   render(){
-    let cats = this.props.cats.map(cat => {
+    let cats = this.props.cats.map((cat, i )=> {
       return(
-        <div>
+        <div key ={i}>
          <img src={cat.image} alt="cats"></img>
         <ul>
           <li>

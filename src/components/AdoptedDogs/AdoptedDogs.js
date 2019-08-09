@@ -2,9 +2,9 @@ import React from 'react'
 
 export default class AdoptedDogs extends React.Component {
   render(){
-    let dogs = this.props.dogs.map(dog => {
+    let dogs = this.props.dogs.map((dog,i) => {
       return (
-        <div>
+        <div key ={i}>
           <img src={dog.image} alt="dogs"></img>
         <ul>
           <li>

@@ -27,7 +27,7 @@ export default class Cats extends React.Component {
             Story: {this.props.cat.story}
           </li>
         </ul>
-        <button type="button" disabled={this.props.count !== 0} onClick={()=>this.props.handleCatAdopt()}>Adopt</button>
+        <button type="button" disabled={this.props.disabled || this.props.count !== 0 || this.props.adoptable.name !== this.props.cat.name} onClick={()=>this.props.handleCatAdopt()}>Adopt</button>
       </div>
     )
   }

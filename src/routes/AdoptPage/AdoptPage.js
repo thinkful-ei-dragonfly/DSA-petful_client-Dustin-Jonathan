@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import config from '../../config';
 import Cats from '../../components/Cats/Cats';
 import Dogs from '../../components/Dogs/Dogs';
-import Users from '../../components/Users/Users'
+import Users from '../../components/Users/Users';
 import ApiService from '../../service/ApiService';
 
 export default class AdoptPage extends React.Component {
@@ -14,49 +14,58 @@ export default class AdoptPage extends React.Component {
     dogNode: null,
     catNode: null,
     name: null,
-    count: 0 
+    count: null,
+    disabled: false
   };
 
   findPosition = () => {
-    let count = 0
-    const name = window.localStorage.getItem("name")
-    let currNode = this.state.users.first
-    while(currNode.data !== name && currNode.next !== null){
-      count++
-      currNode = currNode.next
-    }
-    if(currNode.data !== name){
-      throw new Error("Name not in list")
+    let count = 0;
+    const name = window.localStorage.getItem('name');
+    let currNode = this.state.users.first;
+    if(currNode){
+    while (currNode.data !== name && currNode.next !== null ) {
+      count++;
+      currNode = currNode.next;
     }
 
-    this.setState({ count})
-  }
+    if (currNode.data !== name) {
+      count++;
+      console.log('name not in list');
+    }
+    this.setState({ count });
+  }else {this.setState({count,  disabled: true });}
+    
+  };
+
   handleDogAdopt = () => {
     ApiService.handleDogAdopt()
       .then(dogs => {
-        this.setState({dogs, dogNode: dogs.first });
+        this.setState({ dogs, dogNode: dogs.first });
       })
-      .then(res => ApiService.handleUserDelete()
-      .then(users => {
-        this.setState({users})
-      }))
+      .then(res =>
+        ApiService.handleUserDelete().then(users => {
+          this.setState({ users });
+          this.props.history.push('/adopted');
+        })
+      )
       .catch(error => console.error(error));
   };
 
   handleCatAdopt = () => {
     ApiService.handleCatAdopt()
       .then(cats => {
-        this.setState({cats, catNode: cats.first });
+        this.setState({ cats, catNode: cats.first });
       })
-      .then(res => ApiService.handleUserDelete()
-      .then(users => {
-        this.setState({users})
-      }))
+      .then(res =>
+        ApiService.handleUserDelete().then(users => {
+          this.setState({ users });
+          this.props.history.push('/adopted');
+        })
+      )
       .catch(error => console.error(error));
   };
 
   componentDidMount() {
-    
     Promise.all([
       fetch(`${config.API_ENDPOINT}/dogs`),
       fetch(`${config.API_ENDPOINT}/cats`),
@@ -70,7 +79,13 @@ export default class AdoptPage extends React.Component {
         return Promise.all([dogsRes.json(), catsRes.json(), usersRes.json()]);
       })
       .then(([dogs, cats, users]) => {
-        this.setState({ dogs, cats, users, dogNode: dogs.first, catNode: cats.first });
+        this.setState({
+          dogs,
+          cats,
+          users,
+          dogNode: dogs.first,
+          catNode: cats.first
+        });
       })
       .then(res => this.findPosition())
       .catch(error => {
@@ -88,18 +103,37 @@ export default class AdoptPage extends React.Component {
   };
 
   render() {
-
     return (
       <div>
         <header>
           <h1>Here are the pets for adoption</h1>
         </header>
-        {this.state.users !==null && <p>There are {this.state.count} of users in front of you</p>}
+        {this.state.users !== null && (
+          <p>There are {this.state.count} of users in front of you</p>
+        )}
         {this.state.users !== null && <Users users={this.state.users} />}
-        {this.state.catNode !== null && <Cats count={this.state.count} handleCatAdopt={this.handleCatAdopt} cat={this.state.catNode.data} />}
-        {this.state.dogNode !== null && <Dogs count={this.state.count} handleDogAdopt={this.handleDogAdopt} dog={this.state.dogNode.data} />}
+        {this.state.catNode !== null && (
+          <Cats
+            count={this.state.count}
+            handleCatAdopt={this.handleCatAdopt}
+            adoptable={this.state.cats.first.data}
+            disabled={this.state.disabled}
+            cat={this.state.catNode.data}
+          />
+        )}
+        {this.state.dogNode !== null && (
+          <Dogs
+            count={this.state.count}
+            handleDogAdopt={this.handleDogAdopt}
+            adoptable={this.state.dogs.first.data}
+            disabled={this.state.disabled}
+            dog={this.state.dogNode.data}
+          />
+        )}
         <button onClick={() => this.handleSeeMore()}>See More pets</button>
-        <Link to ='adopted'><button type="button">Check out our adopted pets</button></Link>
+        <Link to="adopted">
+          <button type="button">Check out our adopted pets</button>
+        </Link>
       </div>
     );
   }
